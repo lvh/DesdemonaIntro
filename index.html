@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOC: TNG</title>
+<meta name="author" content="(lvh)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="./reveal.js/css/theme/rackspace.css" id="theme"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1>SOC: TNG</h1>
+<h2>lvh</h2>
+<h2><a href="mailto:"></a></h2>
+<h2></h2>
+</section>
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1">Slides</h2>
+<p>
+<a href="https://www.lvh.io/DesdemonaIntro">https://www.lvh.io/DesdemonaIntro</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline6">
+<h2 id="orgheadline6">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline6">
+</div></section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2">Who am I?</h3>
+<img style="width:70%" src="./media/lvh.svg">
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3">Rackspace</h3>
+<img style="width:50%" src="./media/Rackspace.svg">
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4">‌</h3>
+
+<div class="figure">
+<p><img src="./media/RMSLogoWithTextmarkLight.png" alt="RMSLogoWithTextmarkLight.png" style="width:80%" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Not a sales pitch, but&#x2026;</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline12">
+<h2 id="orgheadline12">"Rackspace's" SOC</h2>
+<div class="outline-text-2" id="text-orgheadline12">
+</div></section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7">RMS: GA in Jan 2016</h3>
+<p>
+No SOC before that?!
+</p>
+
+</section>
+<section id="slide-orgheadline8">
+<h3 id="orgheadline8">CSOC &amp; ISOC</h3>
+
+</section>
+<section id="slide-orgheadline9">
+<h3 id="orgheadline9">Different mechanics</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">CSOC</th>
+<th scope="col" class="org-left">ISOC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Systems?</td>
+<td class="org-left">Many</td>
+<td class="org-left">Few</td>
+</tr>
+
+<tr>
+<td class="org-left">Homogenous?</td>
+<td class="org-left">No</td>
+<td class="org-left">Very</td>
+</tr>
+
+<tr>
+<td class="org-left">Feedback</td>
+<td class="org-left">Some</td>
+<td class="org-left">Lots</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">Different services</h3>
+<ul>
+<li>Lots of in-house tooling</li>
+<li>Endpoint &amp; phishing focus</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">This talk: CSOC</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline26">
+<h2 id="orgheadline26">Challenges</h2>
+<div class="outline-text-2" id="text-orgheadline26">
+</div></section>
+<section id="slide-orgheadline18">
+<h3 id="orgheadline18">Lots of APIs!</h3>
+<div class="outline-text-3" id="text-orgheadline18">
+</div></section>
+<section id="slide-orgheadline13">
+<h4 id="orgheadline13">Don't reinvent the wheel</h4>
+<p class="fragment roll-in">
+(I don't want to implement FIM)
+</p>
+
+</section>
+<section id="slide-orgheadline14">
+<h4 id="orgheadline14">Opinionated set of services</h4>
+
+</section>
+<section id="slide-orgheadline15">
+<h4 id="orgheadline15">Vertical expansion</h4>
+<p>
+(vs core competency)
+</p>
+
+</section>
+<section id="slide-orgheadline16">
+<h4 id="orgheadline16">Vendor cycling</h4>
+</section>
+<section id="slide-orgheadline17">
+<h4 id="orgheadline17">Conclusion</h4>
+<p>
+Need to integrate with lots of APIs, fast
+</p>
+
+</section>
+<section id="slide-orgheadline21">
+<h3 id="orgheadline21">Scale</h3>
+<div class="outline-text-3" id="text-orgheadline21">
+</div></section>
+<section id="slide-orgheadline19">
+<h4 id="orgheadline19">Security-, not SOC-as-a-Service</h4>
+
+</section>
+<section id="slide-orgheadline20">
+<h4 id="orgheadline20">Fire hose</h4>
+<img style="width:30%" src="./media/Hydrant.svg">
+
+</section>
+<section id="slide-orgheadline25">
+<h3 id="orgheadline25">Multi-platform</h3>
+<div class="outline-text-3" id="text-orgheadline25">
+</div></section>
+<section id="slide-orgheadline22">
+<h4 id="orgheadline22">Lots of OSes</h4>
+<img style="width:10%; vertical-align: middle" src="./media/Windows.svg">
+<img style="width:10%; vertical-align: middle" src="./media/RedHat.svg">
+<img style="width:10%; vertical-align: middle" src="./media/CentOS.svg">
+<img style="width:10%; vertical-align: middle" src="./media/Tux.svg">
+
+</section>
+<section id="slide-orgheadline23">
+<h4 id="orgheadline23">Lots of operators</h4>
+<img style="width:10%; vertical-align: middle" src="./media/Rackspace.svg">
+<img style="width:30%; vertical-align: middle" src="./media/AWS.svg">
+<img style="width:30%; vertical-align: middle" src="./media/Azure.svg">
+
+</section>
+<section id="slide-orgheadline24">
+<h4 id="orgheadline24">Lots of platforms</h4>
+<img style="width:10%; vertical-align: middle" src="./media/Rackspace.svg">
+<img style="width:20%; vertical-align: middle" src="./media/OpenStack.svg">
+<img style="width:30%; vertical-align: middle" src="./media/AWS.svg">
+<img style="width:15%; vertical-align: middle" src="./media/VMWare.svg">
+<img style="width:20%; vertical-align: middle" src="./media/Microsoft.svg">
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline90">
+<h2 id="orgheadline90">Big bets</h2>
+<div class="outline-text-2" id="text-orgheadline90">
+</div></section>
+<section id="slide-orgheadline27">
+<h3 id="orgheadline27">Research project</h3>
+<p>
+(If we knew what we were doing&#x2026;)
+</p>
+
+</section>
+<section id="slide-orgheadline28">
+<h3 id="orgheadline28">What makes a SOC?</h3>
+<p>
+Correlation
+</p>
+
+</section>
+<section id="slide-orgheadline32">
+<h3 id="orgheadline32">SOC analysts</h3>
+<div class="outline-text-3" id="text-orgheadline32">
+</div></section>
+<section id="slide-orgheadline29">
+<h4 id="orgheadline29">Close cooperation</h4>
+<p>
+Dev team ⟷ SOC
+</p>
+
+<p>
+RTT hours instead of months
+</p>
+
+</section>
+<section id="slide-orgheadline30">
+<h4 id="orgheadline30">Better correlation tools</h4>
+<ul>
+<li>E.g. query language</li>
+<li>Cheaper experiments</li>
+<li>More insights</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline31">
+<h4 id="orgheadline31">Education</h4>
+<p>
+Enough programming/ML/data analysis
+</p>
+
+</section>
+<section id="slide-orgheadline36">
+<h3 id="orgheadline36">Hosting provider advantage</h3>
+<div class="outline-text-3" id="text-orgheadline36">
+</div></section>
+<section id="slide-orgheadline33">
+<h4 id="orgheadline33">Economies of scale</h4>
+
+</section>
+<section id="slide-orgheadline34">
+<h4 id="orgheadline34">Already know the environment</h4>
+
+</section>
+<section id="slide-orgheadline35">
+<h4 id="orgheadline35">"Internal" data</h4>
+<p>
+e.g. from shared network infra
+</p>
+
+</section>
+<section id="slide-orgheadline39">
+<h3 id="orgheadline39">Storage</h3>
+<div class="outline-text-3" id="text-orgheadline39">
+</div></section>
+<section id="slide-orgheadline37">
+<h4 id="orgheadline37">Storage is pretty cheap</h4>
+
+</section>
+<section id="slide-orgheadline38">
+<h4 id="orgheadline38">Store by default</h4>
+<ul>
+<li>Paper trails</li>
+<li>ML training data</li>
+<li>Experimental detection</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline50">
+<h3 id="orgheadline50">Software</h3>
+<div class="outline-text-3" id="text-orgheadline50">
+</div></section>
+<section id="slide-orgheadline40">
+<h4 id="orgheadline40">Lisp!</h4>
+
+</section>
+<section id="slide-orgheadline41">
+<h4 id="orgheadline41">Clojure(Script)</h4>
+
+</section>
+<section id="slide-orgheadline42">
+<h4 id="orgheadline42">Why does it matter?</h4>
+<ul>
+<li>I like magical Lispy power</li>
+<li>Rapid development cycle</li>
+<li>Less boilerplate</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline43">
+<h4 id="orgheadline43">Ex: enrichments as pure functions</h4>
+<p>
+Arbitrary choice computation vs storage
+</p>
+
+</section>
+<section id="slide-orgheadline44">
+<h4 id="orgheadline44">Ex: query language</h4>
+<p>
+Cross-event correlation
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-fundamental">ip(x) = ip(y)
+and (port(x) = {http,https}
+     or x in my-case)
+and suspicious(y)
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline45">
+<h4 id="orgheadline45">Query language</h4>
+<ul>
+<li>Compiles to logic program</li>
+<li>infix ⇒ sexps ⇒ minikanren ⇒ JVM/JS</li>
+<li>~identical code on JVM &amp; JS</li>
+<li>Next goal: index-assisted search</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline46">
+<h4 id="orgheadline46">Hypothesis: 3 OOM I care about</h4>
+<ul>
+<li>&lt;1s: feature detection</li>
+<li>&lt;1h: analysis over larger dataset</li>
+<li>&gt;1d: training ML models</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline47">
+<h4 id="orgheadline47">Onyx</h4>
+<ul>
+<li>Stream processing</li>
+<li>Like Storm (but better, I think)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline48">
+<h4 id="orgheadline48">Cool Onyx feature: <span class="underline">Just</span> functions</h4>
+<p>
+Easy to re-use code if experiment fails
+</p>
+
+</section>
+<section id="slide-orgheadline49">
+<h4 id="orgheadline49">Pipeline branches</h4>
+<ul>
+<li>Modify pipelines on the fly</li>
+<li>Cheap experiments without jeopardizing prod</li>
+<li>"Would this have caught the attack from last Friday?"</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline75">
+<h3 id="orgheadline75">Machine learning</h3>
+<div class="outline-text-3" id="text-orgheadline75">
+</div></section>
+<section id="slide-orgheadline51">
+<h4 id="orgheadline51">Example: DGA</h4>
+<p>
+E.g. Conficker.C, Murofet, BankPatch, Bonnana, Bobax
+</p>
+
+</section>
+<section id="slide-orgheadline52">
+<h4 id="orgheadline52">Generated domains</h4>
+<p>
+<code>cikiugcaqcegsimg.org</code>
+</p>
+
+<p>
+<code>tosecureonweestablishment.com</code>
+</p>
+
+</section>
+<section id="slide-orgheadline53">
+<h4 id="orgheadline53">Offense</h4>
+<p>
+Every day:
+</p>
+
+<ul>
+<li>Generate 50k domains</li>
+<li>C&amp;C registers 1 domain</li>
+<li>Box connects to 500</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline54">
+<h4 id="orgheadline54">Defense: prevention</h4>
+<ul>
+<li>Reactionary</li>
+<li>Lots of domains</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline55">
+<h4 id="orgheadline55">Defense: blacklist</h4>
+<p>
+Works, but:
+</p>
+
+<ul>
+<li>Reactionary</li>
+<li>Regexen 😩</li>
+<li>Not even regexen 😭</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline56">
+<h4 id="orgheadline56">Defense: machine learning</h4>
+<p>
+Proxy:
+</p>
+
+<ul>
+<li>human can detect</li>
+<li>small {state, feature} space</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline57">
+<h4 id="orgheadline57">Defense: machine learning</h4>
+<p>
+H₀: legit domain ~ other legit domains
+</p>
+
+</section>
+<section id="slide-orgheadline58">
+<h4 id="orgheadline58">Training set (tagged)</h4>
+<ul>
+<li>Legitimate domains (Alexa 1M, OpenDNS)</li>
+<li>Malicious domains (Data Driven Security)</li>
+<li>Malicious domains from botnets (conficker, pushdo, ramdo, rovnix, tinba
+and zeus)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline59">
+<h4 id="orgheadline59">Features</h4>
+<ul>
+<li>Char-level features</li>
+<li>Shannon entropy</li>
+<li>Word-level features</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline60">
+<h4 id="orgheadline60">Char-level features</h4>
+<ul>
+<li>Shared character sequences</li>
+<li>"Can I pronounce this?"</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline61">
+<h4 id="orgheadline61">Shannon entropy</h4>
+
+</section>
+<section id="slide-orgheadline62">
+<h4 id="orgheadline62">Language-level features</h4>
+<ul>
+<li>Google N-gram corpus</li>
+<li>Top 100k words</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline63">
+<h4 id="orgheadline63">Language-level features</h4>
+<p>
+What words are there?
+</p>
+
+<p>
+<code>cikiugcaqcegsimg.org</code>
+</p>
+
+<p>
+<code>tosecureonweestablishment.com</code>
+</p>
+
+<ul>
+<li>Are these (sort-of) words?</li>
+<li>How many? How long?</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline64">
+<h4 id="orgheadline64">Language-level features</h4>
+<p>
+Do these words make sense?
+</p>
+
+<p>
+<code>bobsfishtacklebait.com</code>
+</p>
+
+<p>
+<code>tosecureonweestablishment.com</code>
+</p>
+
+<p>
+Refer to n-grams
+</p>
+
+</section>
+<section id="slide-orgheadline65">
+<h4 id="orgheadline65">Methodology</h4>
+<ul>
+<li>80/20 train/eval</li>
+<li>Resample for balance</li>
+<li>Gradient boosted trees</li>
+<li>Evaluate precision &amp; recall</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline66">
+<h4 id="orgheadline66">Precision</h4>
+<p>
+How many identified items are relevant?
+</p>
+
+</section>
+<section id="slide-orgheadline67">
+<h4 id="orgheadline67">Recall</h4>
+<p>
+How many relevant items are selected?
+</p>
+
+</section>
+<section id="slide-orgheadline68">
+<h4 id="orgheadline68">Confusion matrix</h4>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">PL</td>
+<td class="org-right">PM</td>
+</tr>
+
+<tr>
+<td class="org-left">AL</td>
+<td class="org-right">97.4%</td>
+<td class="org-right">2.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">AM</td>
+<td class="org-right">3%</td>
+<td class="org-right">97.0%</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgheadline69">
+<h4 id="orgheadline69">Some languages are hard</h4>
+
+<div class="figure">
+<p><img src="./media/Slovak.jpg" alt="Slovak.jpg" style="width:100%" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline70">
+<h4 id="orgheadline70">Another example: flux domains</h4>
+<p>
+compromised hosts ⇒ routing mesh
+</p>
+
+</section>
+<section id="slide-orgheadline71">
+<h4 id="orgheadline71">Features</h4>
+<ul>
+<li>TTL</li>
+<li>Set of IPs at FQDN</li>
+<li>Latency</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline72">
+<h4 id="orgheadline72">Results</h4>
+<p>
+2-3 nines on the main diagonal
+</p>
+
+</section>
+<section id="slide-orgheadline73">
+<h4 id="orgheadline73">Conclusion re: ML</h4>
+<p>
+Great results with not a lot of effort
+</p>
+
+</section>
+<section id="slide-orgheadline74">
+<h4 id="orgheadline74">Further efforts</h4>
+<ul>
+<li>Other ML algorithms</li>
+<li>Better features
+<ul>
+<li>More language corpora</li>
+<li>IP allocations</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline81">
+<h3 id="orgheadline81">Back-end hardware</h3>
+<div class="outline-text-3" id="text-orgheadline81">
+</div></section>
+<section id="slide-orgheadline76">
+<h4 id="orgheadline76">Barreleye</h4>
+
+<div class="figure">
+<p><img src="./media/BarreleyeChassis.jpg" alt="BarreleyeChassis.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline77">
+<h4 id="orgheadline77">Barreleye</h4>
+
+<div class="figure">
+<p><img src="./media/BarreleyeBoard.jpg" alt="BarreleyeBoard.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline78">
+<h4 id="orgheadline78">Barreleye</h4>
+
+<div class="figure">
+<p><img src="./media/BarreleyeCPU.jpg" alt="BarreleyeCPU.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline79">
+<h4 id="orgheadline79">Barreleye</h4>
+<ul>
+<li class="fragment roll-in">POWER8 @ 3.7-4.1 GHz, 192 HW threads</li>
+<li class="fragment roll-in">&gt;200MiB on-die cache</li>
+<li class="fragment roll-in">2TB RAM, &gt;200GiB/s mem bandwidth</li>
+<li class="fragment roll-in">CAPI: direct access to flash, FPGA</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline80">
+<h4 id="orgheadline80">Barreleye (just one more)</h4>
+
+<div class="figure">
+<p><img src="./media/BarreleyeTop.png" alt="BarreleyeTop.png" style="width:40%" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline89">
+<h3 id="orgheadline89">Client hardware</h3>
+<div class="outline-text-3" id="text-orgheadline89">
+</div></section>
+<section id="slide-orgheadline82">
+<h4 id="orgheadline82">Desktops have more RAM</h4>
+<p>
+64GB per desktop
+</p>
+
+<p>
+⇓
+</p>
+
+<p>
+who cares if Chrome's RSS is 60GB?
+</p>
+
+</section>
+<section id="slide-orgheadline83">
+<h4 id="orgheadline83">Same code on client &amp; back-end</h4>
+
+</section>
+<section id="slide-orgheadline84">
+<h4 id="orgheadline84">When in doubt, cheat</h4>
+<img style="width:60%; vertical-align: middle" src="./media/Cheating.svg">
+
+</section>
+<section id="slide-orgheadline85">
+<h4 id="orgheadline85">Cheating: GeoIP</h4>
+<p>
+<code>GeoLite2-City-Blocks*</code>
+</p>
+
+<p>
+200MB CSV, 33MB mmdb
+</p>
+
+</section>
+<section id="slide-orgheadline86">
+<h4 id="orgheadline86">Cheating: optimizing JS compilers</h4>
+
+</section>
+<section id="slide-orgheadline87">
+<h4 id="orgheadline87">First pass: self-hosting CLJS</h4>
+<img style="width:60%" src="./media/SelfHostedCLJSPath.svg">
+
+
+</section>
+<section id="slide-orgheadline88">
+<h4 id="orgheadline88">Second pass (cheating)</h4>
+<img style="width:40%" src="./media/NormalCLJSPath.svg">
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline93">
+<h2 id="orgheadline93">Metron</h2>
+<div class="outline-text-2" id="text-orgheadline93">
+</div></section>
+<section id="slide-orgheadline91">
+<h3 id="orgheadline91">Differences</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Desdemona</th>
+<th scope="col" class="org-left">Metron</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Prod?</td>
+<td class="org-left">EOY</td>
+<td class="org-left">Now</td>
+</tr>
+
+<tr>
+<td class="org-left">Language</td>
+<td class="org-left">Clojure(Script)</td>
+<td class="org-left">Java</td>
+</tr>
+
+<tr>
+<td class="org-left">Transport</td>
+<td class="org-left">Onyx</td>
+<td class="org-left">Storm/Kafka</td>
+</tr>
+
+<tr>
+<td class="org-left">Tests</td>
+<td class="org-left">Lots</td>
+<td class="org-left">Some</td>
+</tr>
+
+<tr>
+<td class="org-left">CI?</td>
+<td class="org-left">Extensive</td>
+<td class="org-left">Soon™</td>
+</tr>
+
+<tr>
+<td class="org-left">Coverage?</td>
+<td class="org-left">&gt;90%</td>
+<td class="org-left">~5%</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgheadline92">
+<h3 id="orgheadline92">Partial coverage</h3>
+
+<div class="figure">
+<p><img src="./media/PartialCoverage.png" alt="PartialCoverage.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline94">
+<h2 id="orgheadline94">Questions?</h2>
+<p>
+<a href="https://www.lvh.io/DesdemonaIntro">https://www.lvh.io/DesdemonaIntro</a>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

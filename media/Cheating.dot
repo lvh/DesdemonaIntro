@@ -1,0 +1,29 @@
+strict digraph {
+        bgcolor="transparent";
+        edge [fontname="Helvetica"];
+        node [fontname="Helvetica"];
+        layout=fdp;
+
+        subgraph {
+                edge [arrowhead=none];                
+                node [label=""];
+                
+                n1;
+                n2;
+                n3;
+                n4;
+                n5;
+
+                n1 -> n2 -> n3 -> n4 -> n5;
+                n1 -> n3;
+                n1 -> n4;
+                n1 -> n5;
+                n2 -> n4;
+                n2 -> n5;
+                n3 -> n5;                
+        }
+
+        browser [label="Browser"];
+        browser -> n1 [xlabel="wss:// RPC     " len=5];
+        n1 -> browser;        
+}

@@ -1,0 +1,8 @@
+digraph {
+        src [label="ClojureScript source"];
+        js [label="Intermediary JS"];
+        browser [label="Browser JS eval"];
+
+        src -> js [label="   ClojureScript compiler\n(self-hosted)"];
+        js -> browser;
+}

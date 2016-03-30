@@ -1,0 +1,10 @@
+digraph {
+        src [label="ClojureScript source"];
+        js [label="Intermediary JS"];
+        cjs [label="Optimized JS"];
+        browser [label="Browser"];
+
+        src -> js [label="   ClojureScript compiler\n(on JVM)"];
+        js -> cjs [label="   Google Closure compiler\nwith aggressive opts"];
+        cjs -> browser;
+}

@@ -1,0 +1,449 @@
+#+Title: SOC: TNG
+#+Author: lvh
+#+Email:
+
+#+OPTIONS: toc:nil reveal_rolling_links:nil num:nil reveal_history:true
+#+REVEAL_TRANS: linear
+#+REVEAL_THEME: rackspace
+
+* Slides
+
+  [[https://www.lvh.io/DesdemonaIntro]]
+
+* Introduction
+
+** Who am I?
+
+   #+BEGIN_HTML
+   <img style="width:70%" src="./media/lvh.svg">
+   #+END_HTML
+
+** Rackspace
+
+   #+BEGIN_HTML
+   <img style="width:50%" src="./media/Rackspace.svg">
+   #+END_HTML
+
+** ‌
+
+   #+ATTR_HTML: :style width:80%
+   [[./media/RMSLogoWithTextmarkLight.png]]
+
+** Not a sales pitch, but...
+
+* "Rackspace's" SOC
+
+** RMS: GA in Jan 2016
+
+   No SOC before that?!
+
+** CSOC & ISOC
+
+** Different mechanics
+
+   |             | CSOC | ISOC |
+   |-------------+------+------|
+   | /           | <    | >    |
+   | Systems?    | Many | Few  |
+   | Homogenous? | No   | Very |
+   | Feedback    | Some | Lots |
+
+** Different services
+
+   * Lots of in-house tooling
+   * Endpoint & phishing focus
+
+** This talk: CSOC
+
+* Challenges
+
+** Lots of APIs!
+
+*** Don't reinvent the wheel
+
+    #+ATTR_REVEAL: :frag roll-in
+    (I don't want to implement FIM)
+
+*** Opinionated set of services
+
+*** Vertical expansion
+
+    (vs core competency)
+
+*** Vendor cycling
+*** Conclusion
+
+    Need to integrate with lots of APIs, fast
+
+** Scale
+
+*** Security-, not SOC-as-a-Service
+
+*** Fire hose
+
+    #+BEGIN_HTML
+    <img style="width:30%" src="./media/Hydrant.svg">
+    #+END_HTML
+
+** Multi-platform
+
+*** Lots of OSes
+
+    #+BEGIN_HTML
+    <img style="width:10%; vertical-align: middle" src="./media/Windows.svg">
+    <img style="width:10%; vertical-align: middle" src="./media/RedHat.svg">
+    <img style="width:10%; vertical-align: middle" src="./media/CentOS.svg">
+    <img style="width:10%; vertical-align: middle" src="./media/Tux.svg">
+    #+END_HTML
+
+*** Lots of operators
+
+    #+BEGIN_HTML
+    <img style="width:10%; vertical-align: middle" src="./media/Rackspace.svg">
+    <img style="width:30%; vertical-align: middle" src="./media/AWS.svg">
+    <img style="width:30%; vertical-align: middle" src="./media/Azure.svg">
+    #+END_HTML
+
+*** Lots of platforms
+
+    #+BEGIN_HTML
+    <img style="width:10%; vertical-align: middle" src="./media/Rackspace.svg">
+    <img style="width:20%; vertical-align: middle" src="./media/OpenStack.svg">
+    <img style="width:30%; vertical-align: middle" src="./media/AWS.svg">
+    <img style="width:15%; vertical-align: middle" src="./media/VMWare.svg">
+    <img style="width:20%; vertical-align: middle" src="./media/Microsoft.svg">
+    #+END_HTML
+
+* Big bets
+
+** Research project
+
+   (If we knew what we were doing...)
+
+** What makes a SOC?
+
+   Correlation
+
+** SOC analysts
+
+*** Close cooperation
+
+    Dev team ⟷ SOC
+
+    RTT hours instead of months
+
+*** Better correlation tools
+
+    * E.g. query language
+    * Cheaper experiments
+    * More insights
+
+*** Education
+
+    Enough programming/ML/data analysis
+
+** Hosting provider advantage
+
+*** Economies of scale
+
+*** Already know the environment
+
+*** "Internal" data
+
+    e.g. from shared network infra
+
+** Storage
+
+*** Storage is pretty cheap
+
+*** Store by default
+
+    * Paper trails
+    * ML training data
+    * Experimental detection
+
+** Software
+
+*** Lisp!
+
+*** Clojure(Script)
+
+*** Why does it matter?
+
+    * I like magical Lispy power
+    * Rapid development cycle
+    * Less boilerplate
+
+*** Ex: enrichments as pure functions
+
+    Arbitrary choice computation vs storage
+
+*** Ex: query language
+
+    Cross-event correlation
+
+    #+BEGIN_SRC fundamental
+    ip(x) = ip(y)
+    and (port(x) = {http,https}
+         or x in my-case)
+    and suspicious(y)
+    #+END_SRC
+
+*** Query language
+
+    * Compiles to logic program
+    * infix ⇒ sexps ⇒ minikanren ⇒ JVM/JS
+    * ~identical code on JVM & JS
+    * Next goal: index-assisted search
+
+*** Hypothesis: 3 OOM I care about
+
+    * <1s: feature detection
+    * <1h: analysis over larger dataset
+    * >1d: training ML models
+
+*** Onyx
+
+    * Stream processing
+    * Like Storm (but better, I think)
+
+*** Cool Onyx feature: _Just_ functions
+
+    Easy to re-use code if experiment fails
+
+*** Pipeline branches
+
+    * Modify pipelines on the fly
+    * Cheap experiments without jeopardizing prod
+    * "Would this have caught the attack from last Friday?"
+
+** Machine learning
+
+*** Example: DGA
+
+    E.g. Conficker.C, Murofet, BankPatch, Bonnana, Bobax
+
+*** Generated domains
+
+    ~cikiugcaqcegsimg.org~
+
+    ~tosecureonweestablishment.com~
+
+*** Offense
+
+    Every day:
+
+    * Generate 50k domains
+    * C&C registers 1 domain
+    * Box connects to 500
+
+*** Defense: prevention
+
+    * Reactionary
+    * Lots of domains
+
+*** Defense: blacklist
+
+    Works, but:
+
+    * Reactionary
+    * Regexen 😩
+    * Not even regexen 😭
+
+*** Defense: machine learning
+
+    Proxy:
+
+    * human can detect
+    * small {state, feature} space
+
+*** Defense: machine learning
+
+    H₀: legit domain ~ other legit domains
+
+*** Training set (tagged)
+
+    * Legitimate domains (Alexa 1M, OpenDNS)
+    * Malicious domains (Data Driven Security)
+    * Malicious domains from botnets (conficker, pushdo, ramdo, rovnix, tinba
+      and zeus)
+
+*** Features
+
+    * Char-level features
+    * Shannon entropy
+    * Word-level features
+
+*** Char-level features
+
+    * Shared character sequences
+    * "Can I pronounce this?"
+
+*** Shannon entropy
+
+*** Language-level features
+
+    * Google N-gram corpus
+    * Top 100k words
+
+*** Language-level features
+
+    What words are there?
+
+    ~cikiugcaqcegsimg.org~
+
+    ~tosecureonweestablishment.com~
+
+    * Are these (sort-of) words?
+    * How many? How long?
+
+*** Language-level features
+
+    Do these words make sense?
+
+    ~bobsfishtacklebait.com~
+
+    ~tosecureonweestablishment.com~
+
+    Refer to n-grams
+
+*** Methodology
+
+    * 80/20 train/eval
+    * Resample for balance
+    * Gradient boosted trees
+    * Evaluate precision & recall
+
+*** Precision
+
+    How many identified items are relevant?
+
+*** Recall
+
+    How many relevant items are selected?
+
+*** Confusion matrix
+
+    |    |    PL |    PM |
+    | /  |     < |     > |
+    | AL | 97.4% |  2.6% |
+    | AM |    3% | 97.0% |
+
+*** Some languages are hard
+
+    #+ATTR_HTML: :style width:100%
+    [[./media/Slovak.jpg]]
+
+*** Another example: flux domains
+
+    compromised hosts ⇒ routing mesh
+
+*** Features
+
+    * TTL
+    * Set of IPs at FQDN
+    * Latency
+
+*** Results
+
+    2-3 nines on the main diagonal
+
+*** Conclusion re: ML
+
+    Great results with not a lot of effort
+
+*** Further efforts
+
+    * Other ML algorithms
+    * Better features
+      * More language corpora
+      * IP allocations
+
+** Back-end hardware
+
+*** Barreleye
+
+    [[./media/BarreleyeChassis.jpg]]
+
+*** Barreleye
+
+    [[./media/BarreleyeBoard.jpg]]
+
+*** Barreleye
+
+    [[./media/BarreleyeCPU.jpg]]
+
+*** Barreleye
+
+    #+ATTR_REVEAL: :frag (roll-in)
+    * POWER8 @ 3.7-4.1 GHz, 192 HW threads
+    * >200MiB on-die cache
+    * 2TB RAM, >200GiB/s mem bandwidth
+    * CAPI: direct access to flash, FPGA
+
+*** Barreleye (just one more)
+
+    #+ATTR_HTML: :style width:40%
+    [[./media/BarreleyeTop.png]]
+
+** Client hardware
+
+*** Desktops have more RAM
+
+    64GB per desktop
+
+    ⇓
+
+    who cares if Chrome's RSS is 60GB?
+
+*** Same code on client & back-end
+
+*** When in doubt, cheat
+
+    #+BEGIN_HTML
+    <img style="width:60%; vertical-align: middle" src="./media/Cheating.svg">
+    #+END_HTML
+
+*** Cheating: GeoIP
+
+    ~GeoLite2-City-Blocks*~
+
+    200MB CSV, 33MB mmdb
+
+*** Cheating: optimizing JS compilers
+
+*** First pass: self-hosting CLJS
+
+    #+BEGIN_HTML
+    <img style="width:60%" src="./media/SelfHostedCLJSPath.svg">
+    #+END_HTML
+
+
+*** Second pass (cheating)
+
+    #+BEGIN_HTML
+    <img style="width:40%" src="./media/NormalCLJSPath.svg">
+    #+END_HTML
+
+
+* Metron
+
+** Differences
+
+   |           | Desdemona       | Metron      |
+   |-----------+-----------------+-------------|
+   | /         | <               | >           |
+   | Prod?     | EOY             | Now         |
+   | Language  | Clojure(Script) | Java        |
+   | Transport | Onyx            | Storm/Kafka |
+   | Tests     | Lots            | Some        |
+   | CI?       | Extensive       | Soon™       |
+   | Coverage? | >90%            | ~5%         |
+
+** Partial coverage
+
+   [[./media/PartialCoverage.png]]
+
+* Questions?
+
+  [[https://www.lvh.io/DesdemonaIntro]]
