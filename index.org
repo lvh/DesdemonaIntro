@@ -120,6 +120,10 @@
 
    (If we knew what we were doing...)
 
+** Motivation
+
+   [[./media/Motivation.png]]
+
 ** What makes a SOC?
 
    Correlation
